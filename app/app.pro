@@ -26,7 +26,8 @@ SOURCES += main.cpp \
 
 RESOURCES += \
     navigation.qrc \
-    images/images.qrc
+    images/images.qrc \
+    mapbox/mapbox.qrc
 
 LIBS += $$OUT_PWD/../dbus_interface/libdbus_interface.a
 INCLUDEPATH += $$OUT_PWD/../dbus_interface
@@ -34,5 +35,4 @@ INCLUDEPATH += $$OUT_PWD/../dbus_interface
 include(app.pri)
 
 DISTFILES +=
-
 
