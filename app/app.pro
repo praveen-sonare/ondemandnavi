@@ -26,8 +26,16 @@ SOURCES += main.cpp \
 
 RESOURCES += \
     navigation.qrc \
-    images/images.qrc \
-    mapbox/mapbox.qrc
+    images/images.qrc
+
+ENABLE_OSM = $$ENABLE_OSM
+
+equals(ENABLE_OSM, 1) {
+    DEFINES += ENABLE_OSM
+    RESOURCES += openstreetmaps/openstreetmaps.qrc
+} else {
+    RESOURCES += mapbox/mapbox.qrc
+}
 
 LIBS += $$OUT_PWD/../dbus_interface/libdbus_interface.a
 INCLUDEPATH += $$OUT_PWD/../dbus_interface

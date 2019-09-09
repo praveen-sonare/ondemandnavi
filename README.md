@@ -6,6 +6,9 @@ https://doc-snapshots.qt.io/qt5-5.9/qtlocation-mapviewer-example.html
 
 #build step
 
+NOTE: To use OpenStreetMaps instead of MapBox you should replace
+the qmake step below with 'qmake ../ ENABLE_OSM=1'
+
 source /SDK_PATH/environment-setup-aarch64-agl-linux
 
 mkdir build
