@@ -60,11 +60,7 @@ ApplicationWindow {
 
         width: parent.width
         height: parent.height
-        plugin: Plugin {
-            name: "mapbox"
-            PluginParameter { name: "mapbox.access_token";
-            value: fileOperation.getMapAccessToken() }
-        }
+        plugin: MapPlugin { }
         center: QtPositioning.coordinate(car_position_lat, car_position_lon)
         zoomLevel: default_zoom_level
         bearing: 0
@@ -214,12 +210,7 @@ ApplicationWindow {
 		RouteModel {
 			id: routeModel
             objectName: "routeModel"
-            plugin : Plugin {
-                name: "mapbox"
-                PluginParameter { name: "mapbox.access_token";
-                    value: fileOperation.getMapAccessToken()
-                }
-            }
+            plugin: MapPlugin { }
 			query:  RouteQuery {
 				id: routeQuery
 			}
