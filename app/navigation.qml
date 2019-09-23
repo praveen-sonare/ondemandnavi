@@ -39,6 +39,23 @@ ApplicationWindow {
     property real positionTimer_interval : fileOperation.getUpdateInterval() // set millisecond
     property real car_moving_distance : (car_driving_speed / 3.6) / (1000/positionTimer_interval) // Metric unit
 
+    Plugin {
+            id: mapbox
+            name: "mapbox"
+            PluginParameter {
+                name: "mapbox.access_token";
+                value: fileOperation.getMapAccessToken()
+            }
+    }
+    Plugin {
+            id: osm
+            name: "osm"
+            PluginParameter {
+                name: "osm.mapping.host";
+                value: "https://a.tile.openstreetmap.org/"
+            }
+    }
+
     Map{
 		id: map
         property int pathcounter : 0
@@ -60,11 +77,7 @@ ApplicationWindow {
 
         width: parent.width
         height: parent.height
-        plugin: Plugin {
-            name: "mapbox"
-            PluginParameter { name: "mapbox.access_token";
-            value: fileOperation.getMapAccessToken() }
-        }
+        plugin: fileOperation.isOSMEnabled() ? osm : mapbox
         center: QtPositioning.coordinate(car_position_lat, car_position_lon)
         zoomLevel: default_zoom_level
         bearing: 0
@@ -214,12 +227,7 @@ ApplicationWindow {
 		RouteModel {
 			id: routeModel
             objectName: "routeModel"
-            plugin : Plugin {
-                name: "mapbox"
-                PluginParameter { name: "mapbox.access_token";
-                    value: fileOperation.getMapAccessToken()
-                }
-            }
+            plugin: map.plugin
 			query:  RouteQuery {
 				id: routeQuery
 			}

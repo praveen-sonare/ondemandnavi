@@ -18,6 +18,9 @@ make
 
 #configuration
 
+NOTE: To use OpenStreetMaps instead of MapBox you should set
+enableOSM to true in the configuration sample below
+
 Please set mapAccessToken, mapStyleUrl, speed,
 interval, latitude and longitude in JSON format
 in /etc/naviconfig.ini
@@ -35,7 +38,8 @@ example
 	"interval":100,
 	"latitude":36.1363,
 	"longitute":-115.151,
-	"mapStyleUrls":"mapbox://styles/mapbox/dark-v9"
+	"mapStyleUrls":"mapbox://styles/mapbox/dark-v9",
+	"enableOSM:false
 }
 
 #Qt Creator

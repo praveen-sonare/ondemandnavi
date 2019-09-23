@@ -22,6 +22,7 @@ class File_Operation: public QObject{
     int m_update_interval;      // set millisecond
     double m_start_latitude;
     double m_start_longitute;
+    bool m_enable_osm;
     QString m_mapStyleUrls;
 
 public:
@@ -34,6 +35,7 @@ public:
     Q_INVOKABLE double getStartLatitude();
     Q_INVOKABLE double getStartLongitute();
     Q_INVOKABLE QString getMapStyleUrls();
+    Q_INVOKABLE bool isOSMEnabled() { return m_enable_osm; };
 
 private:
     void initFileOperation();
