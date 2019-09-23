@@ -27,14 +27,12 @@ void File_Operation::initFileOperation(){
     QJsonDocument jsonDoc(QJsonDocument::fromJson(data));
     QJsonObject jsonObj(jsonDoc.object());
 
-#ifndef ENABLE_OSM
     if(jsonObj.contains("mapAccessToken")){
         m_mapAccessToken = jsonObj["mapAccessToken"].toString();
     }else{
         fprintf(stderr,"Failed to find mapAccessToken data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
         return;
     }
-#endif
 
     if(jsonObj.contains("speed")){
         m_car_speed = jsonObj["speed"].toDouble();
