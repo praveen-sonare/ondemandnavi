@@ -15,6 +15,7 @@ void File_Operation::initFileOperation(){
     m_update_interval = 100; // set default millisecond
     m_start_latitude = 36.136261; // set default coordinate Westgate
     m_start_longitute = -115.151254;
+    m_enable_osm = false;
     m_mapStyleUrls = "mapbox://styles/mapbox/streets-v10"; // set default map style
 
     QFile file(NAVI_CONFIG_FILEPATH);
@@ -26,13 +27,6 @@ void File_Operation::initFileOperation(){
     QByteArray data = file.readAll();
     QJsonDocument jsonDoc(QJsonDocument::fromJson(data));
     QJsonObject jsonObj(jsonDoc.object());
-
-    if(jsonObj.contains("mapAccessToken")){
-        m_mapAccessToken = jsonObj["mapAccessToken"].toString();
-    }else{
-        fprintf(stderr,"Failed to find mapAccessToken data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
-        return;
-    }
 
     if(jsonObj.contains("speed")){
         m_car_speed = jsonObj["speed"].toDouble();
@@ -59,6 +53,21 @@ void File_Operation::initFileOperation(){
         m_start_longitute = jsonObj["longitute"].toDouble();
     }else{
         fprintf(stderr,"Failed to find longitute data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
+        return;
+    }
+
+    // Check if using OSM
+    if (jsonObj.contains("enableOSM")){
+        m_enable_osm = jsonObj["enableOSM"].toBool();
+        if (m_enable_osm)
+            return;
+    }
+
+    // MapBox only settings
+    if(jsonObj.contains("mapAccessToken")){
+        m_mapAccessToken = jsonObj["mapAccessToken"].toString();
+    }else{
+        fprintf(stderr,"Failed to find mapAccessToken data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
         return;
     }
 
