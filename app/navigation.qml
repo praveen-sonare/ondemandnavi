@@ -664,7 +664,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: 125
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 125
+        anchors.bottomMargin: 175
     }
 
 	BtnMapDirection {
@@ -688,7 +688,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 250
+        anchors.bottomMargin: 325
 	}
 
 	BtnEnlarge {
@@ -696,7 +696,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 125
+        anchors.bottomMargin: 175
 	}
 
 	ImgDestinationDirection {
@@ -713,5 +713,25 @@ ApplicationWindow {
         anchors.topMargin: 25
         anchors.left: img_destination_direction.right
         anchors.leftMargin: 20
+	}
+
+    Image {
+        visible: map.plugin.name === "mapbox"
+        anchors.left: parent.left
+        anchors.leftMargin: 35
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        scale: 1.5
+        source: "images/mapbox_logo.svg"
+    }
+
+    Label {
+        visible: map.plugin.name === "mapbox"
+        font.pixelSize: 18
+        anchors.right: parent.right
+        anchors.rightMargin: 25
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        text: "<a href='https://www.mapbox.com/about/maps'>© Mapbox | </a> <a href='http://www.openstreetmap.org/copyright'>© OpenStreetMap | </a> <a href='https://www.mapbox.com/map-feedback/'><strong>Improve this map</strong>"
 	}
 }
