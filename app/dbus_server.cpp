@@ -55,16 +55,6 @@ void DBus_Server::initAPIs(QObject *parent){
                          this,SLOT(sendSignalPosInfo(double,double,double,double)))) {
         qDebug() << m_serverName << "qmlSIGNAL:qmlSignalPosInfo to cppSLOT:sendSignalPosInfo connect is failed";
     }
-
-    if(!QObject::connect(parent,SIGNAL(qmlSignalStopDemo()),
-                         this,SLOT(sendSignalStopDemo()))) {
-        qDebug() << m_serverName << "qmlSIGNAL:qmlSignalStopDemo to cppSLOT:sendSignalStopDemo connect is failed";
-    }
-
-    if(!QObject::connect(parent,SIGNAL(qmlSignalArrvied()),
-                         this,SLOT(sendSignalArrvied()))) {
-        qDebug() << m_serverName << "qmlSIGNAL:qmlSignalArrvied to cppSLOT:sendSignalArrvied connect is failed";
-    }
 }
 
 void DBus_Server::getRouteInfoSlot(){
@@ -92,22 +82,3 @@ void DBus_Server::sendSignalPosInfo(double lat, double lon, double drc, double d
     QDBusConnection::sessionBus().send(message);
     return;
 }
-
-void DBus_Server::sendSignalStopDemo(){
-    qDebug() << "call sendSignalStopDemo ";
-    QDBusMessage message = QDBusMessage::createSignal(m_objName,
-                                                     org::agl::naviapi::staticInterfaceName(),
-                                                     "signalStopDemo");
-    QDBusConnection::sessionBus().send(message);
-    return;
-}
-
-void DBus_Server::sendSignalArrvied(){
-    qDebug() << "call sendSignalArrvied ";
-    QDBusMessage message = QDBusMessage::createSignal(m_objName,
-                                                     org::agl::naviapi::staticInterfaceName(),
-                                                     "signalArrvied");
-    QDBusConnection::sessionBus().send(message);
-    return;
-}
-// Method

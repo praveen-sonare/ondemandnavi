@@ -15,12 +15,6 @@
                     <arg name="direction" type="d" direction="out"/>
                     <arg name="distance"  type="d" direction="out"/>
                 </signal>
-                <!-- void signalStopDemo() -->
-                <signal name="signalStopDemo">
-                </signal>
-                <!-- void signalArrvied() -->
-                <signal name="signalArrvied">
-                </signal>
                 <!-- void getRouteInfo() -->
                 <signal name="getRouteInfo">
                 </signal>
