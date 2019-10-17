@@ -15,21 +15,9 @@
  * limitations under the License.
  */
 
-#ifdef DESKTOP
-#define USE_QTAGLEXTRAS		0
-#define USE_QLIBWINDOWMANAGER	0
-#else
-#define USE_QTAGLEXTRAS		0
-#define USE_QLIBWINDOWMANAGER	1
-#endif
-
-#if USE_QTAGLEXTRAS
-#include <QtAGLExtras/AGLApplication>
-#elif USE_QLIBWINDOWMANAGER
 #include <qlibwindowmanager.h>
 #include <qlibhomescreen.h>
 #include <string>
-#endif
 #include <QtCore/QDebug>
 #include <QtCore/QCommandLineParser>
 #include <QtCore/QUrlQuery>
@@ -56,13 +44,6 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	
-#if USE_QTAGLEXTRAS
-	AGLApplication app(argc, argv);
-	app.setApplicationName("navigation");
-	app.setupApplicationRole("navigation");
- 	app.load(QUrl(QStringLiteral("qrc:/navigation.qml")));
-	
-#elif USE_QLIBWINDOWMANAGER
 	QGuiApplication app(argc, argv);
 	QString graphic_role = QString("navigation");
 	int port = 1700;
@@ -131,29 +112,6 @@ int main(int argc, char *argv[])
 	DBus_Server dbus(map);
 	dbus_server_navigationcore dbus_navigationcore(map);
 
-#else	// for only libwindowmanager
-	QGuiApplication app(argc, argv);
-	app.setApplicationName("navigation");
-
-	// Load qml
-	QQmlApplicationEngine engine;
-
-	MarkerModel model;
-	engine.rootContext()->setContextProperty("markerModel", &model);
-
-	Guidance_Module guidance;
-	engine.rootContext()->setContextProperty("guidanceModule", &guidance);
-
-	File_Operation file;
-	engine.rootContext()->setContextProperty("fileOperation", &file);
-
-	engine.load(QUrl(QStringLiteral("qrc:/navigation.qml")));
-	QObject *map = engine.rootObjects().first()->findChild<QObject*>("map");
-	DBus_Server dbus(map);
-	dbus_server_navigationcore dbus_navigationcore(map);
-
-#endif
-	
 	return app.exec();
 }
 
