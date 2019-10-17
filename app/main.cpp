@@ -27,23 +27,12 @@
 #include <QtQml/QQmlContext>
 #include <QtQuickControls2/QQuickStyle>
 #include <QQuickWindow>
-#include <QtDBus/QDBusConnection>
 #include "markermodel.h"
-#include "dbus_server.h"
-#include "dbus_server_navigationcore.h"
 #include "guidance_module.h"
 #include "file_operation.h"
 
 int main(int argc, char *argv[])
 {
-	
-	// for dbusIF
-	if (!QDBusConnection::sessionBus().isConnected()) {
-		qWarning("Cannot connect to the D-Bus session bus.\n"
-			 "Please check your system settings and try again.\n");
-		return 1;
-	}
-	
 	QGuiApplication app(argc, argv);
 	QString graphic_role = QString("navigation");
 	int port = 1700;
@@ -108,9 +97,6 @@ int main(int argc, char *argv[])
  	QObject *root = engine.rootObjects().first();
 	QQuickWindow *window = qobject_cast<QQuickWindow *>(root);
 	QObject::connect(window, SIGNAL(frameSwapped()), qwmHandler, SLOT(slotActivateSurface()));
-	QObject *map = engine.rootObjects().first()->findChild<QObject*>("map");
-	DBus_Server dbus(map);
-	dbus_server_navigationcore dbus_navigationcore(map);
 
 	return app.exec();
 }
