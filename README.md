@@ -41,8 +41,3 @@ example
 	"mapStyleUrls":"mapbox://styles/mapbox/dark-v9",
 	"enableOSM:false
 }
-
-#Qt Creator
-If you want to start from Qt Creater
-add 'DEFINES * = DESKTOP' to project > build step > additional argument
-

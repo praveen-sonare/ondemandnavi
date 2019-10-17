@@ -2,11 +2,6 @@ TARGET = navigation
 QT = quick qml aglextras
 PKGCONFIG += qlibhomescreen qlibwindowmanager
 
-equals(DEFINES, "DESKTOP"){
-    QT -= aglextras
-    PKGCONFIG -= qlibhomescreen qlibwindowmanager
-}
-
 QT += positioning
 QT += dbus
 QT += core
