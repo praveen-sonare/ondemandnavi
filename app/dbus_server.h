@@ -28,6 +28,6 @@ public slots:
     void sendSignalRouteInfo(double srt_lat,double srt_lon,double end_lat,double end_lon);
     void sendSignalPosInfo(double lat,double lon,double drc,double dst);
     void sendSignalStopDemo();
-    void sendSignalArrvied();
+    void sendSignalArrived();
 };
 #endif // DBUS_SERVER_H
