@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The Qt Company Ltd.
+ * Copyright (C) 2019 Konsulko Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +47,10 @@ ApplicationWindow {
                 name: "mapbox.access_token";
                 value: fileOperation.getMapAccessToken()
             }
+            PluginParameter {
+                name: "mapbox.mapping.additional_style_urls"
+                value: fileOperation.getMapStyleUrls()
+            }
     }
     Plugin {
             id: osm
@@ -72,7 +77,7 @@ ApplicationWindow {
         signal qmlSignalRouteInfo(double srt_lat,double srt_lon,double end_lat,double end_lon);
         signal qmlSignalPosInfo(double lat,double lon,double drc,double dst);
         signal qmlSignalStopDemo();
-        signal qmlSignalArrvied();
+        signal qmlSignalArrived();
         signal qmlCheckDirection(double cur_dir,double next_dir,double is_rot);
 
         width: parent.width
@@ -542,7 +547,7 @@ ApplicationWindow {
                     {
                         // Arrive at your destination
                         btn_guidance.sts_guide = 0
-                        map.qmlSignalArrvied()
+                        map.qmlSignalArrived()
                     }
                 }else{
                     setNextCoordinate(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,root.car_moving_distance)
