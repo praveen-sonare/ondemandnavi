@@ -14,7 +14,7 @@ void File_Operation::initFileOperation(){
     m_car_speed = 60; // set default Km/h
     m_update_interval = 100; // set default millisecond
     m_start_latitude = 36.136261; // set default coordinate Westgate
-    m_start_longitute = -115.151254;
+    m_start_longitude = -115.151254;
     m_enable_osm = false;
     m_mapStyleUrls = "mapbox://styles/mapbox/streets-v10"; // set default map style
 
@@ -49,10 +49,10 @@ void File_Operation::initFileOperation(){
         return;
     }
 
-    if(jsonObj.contains("longitute")){
-        m_start_longitute = jsonObj["longitute"].toDouble();
+    if(jsonObj.contains("longitude")){
+        m_start_longitude = jsonObj["longitude"].toDouble();
     }else{
-        fprintf(stderr,"Failed to find longitute data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
+        fprintf(stderr,"Failed to find longitude data \"%s\": %m", qPrintable(NAVI_CONFIG_FILEPATH));
         return;
     }
 
@@ -95,8 +95,8 @@ int File_Operation::getUpdateInterval(){
 double File_Operation::getStartLatitude(){
     return m_start_latitude;
 }
-double File_Operation::getStartLongitute(){
-    return m_start_longitute;
+double File_Operation::getStartLongitude(){
+    return m_start_longitude;
 }
 QString File_Operation::getMapStyleUrls() {
     return m_mapStyleUrls;
