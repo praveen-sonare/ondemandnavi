@@ -38,7 +38,7 @@ Item {
         map.initDestination(startFromCurrentPosition)
 
         if(btn_guidance.sts_guide != 0){
-            map.qmlSignalStopDemo()
+            navigation.broadcastStatus("stop");
         }
 
         if(map.center !== map.currentpostion){
