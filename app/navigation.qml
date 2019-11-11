@@ -61,7 +61,25 @@ ApplicationWindow {
             }
     }
 
-    Map{
+    Connections {
+        target: navigation
+
+        onWaypointsEvent: {
+            // only support one waypoint currently
+            map.doSetWaypointsSlot(data.points[0].latitude, data.points[0].longitude, true)
+        }
+
+        onStatusEvent: {
+            if (data.state == "stop") {
+                map.doPauseSimulationSlot()
+            }
+            if (data.state == "start") {
+                btn_guidance.startGuidance()
+            }
+        }
+    }
+
+    Map {
 		id: map
         property int pathcounter : 0
         property int segmentcounter : 0
@@ -73,12 +91,6 @@ ApplicationWindow {
 		property int jitterThreshold : 30
         property variant currentpostion : QtPositioning.coordinate(car_position_lat, car_position_lon)
         property int last_segmentcounter : -1
-
-        signal qmlSignalRouteInfo(double srt_lat,double srt_lon,double end_lat,double end_lon);
-        signal qmlSignalPosInfo(double lat,double lon,double drc,double dst);
-        signal qmlSignalStopDemo();
-        signal qmlSignalArrived();
-        signal qmlCheckDirection(double cur_dir,double next_dir,double is_rot);
 
         width: parent.width
         height: parent.height
@@ -320,7 +332,7 @@ ApplicationWindow {
                 }
 
                 routeModel.update()
-                map.qmlSignalRouteInfo(car_position_lat, car_position_lon,coord.latitude,coord.longitude)
+                navigation.broadcastRouteInfo(car_position_lat, car_position_lon,coord.latitude,coord.longitude)
 
                 // update icon_end_point
                 icon_end_point.coordinate = coord
@@ -336,7 +348,7 @@ ApplicationWindow {
             // reset currentpostion
             map.currentpostion = QtPositioning.coordinate(car_position_lat, car_position_lon)
             car_accumulated_distance = 0
-            map.qmlSignalPosInfo(car_position_lat, car_position_lon,car_direction,car_accumulated_distance)
+            navigation.broadcastPosition(car_position_lat, car_position_lon,car_direction,car_accumulated_distance)
 
             routeQuery.clearWaypoints();
             routeQuery.addWaypoint(map.currentpostion)
@@ -539,7 +551,7 @@ ApplicationWindow {
                 {
                     map.currentpostion = routeModel.get(0).path[pathcounter]
                     car_accumulated_distance += next_distance
-                    map.qmlSignalPosInfo(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,car_accumulated_distance)
+                    navigation.broadcastPosition(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,car_accumulated_distance)
                     if(pathcounter < routeModel.get(0).path.length - 1){
                         pathcounter++
                     }
@@ -547,14 +559,14 @@ ApplicationWindow {
                     {
                         // Arrive at your destination
                         btn_guidance.sts_guide = 0
-                        map.qmlSignalArrived()
+                        navigation.broadcastStatus("arrived")
                     }
                 }else{
                     setNextCoordinate(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,root.car_moving_distance)
                     if(pathcounter != 0){
                         car_accumulated_distance += root.car_moving_distance
                     }
-                    map.qmlSignalPosInfo(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,car_accumulated_distance)
+                    navigation.broadcastPosition(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,car_accumulated_distance)
                 }
 
                 if(btn_present_position.state === "Flowing")
@@ -593,12 +605,12 @@ ApplicationWindow {
 
         function doGetRouteInfoSlot(){
             if(btn_guidance.sts_guide == 0){ // idle
-                map.qmlSignalPosInfo(car_position_lat, car_position_lon,car_direction,car_accumulated_distance);
+                navigation.broadcastPosition(car_position_lat, car_position_lon,car_direction,car_accumulated_distance);
             }else if(btn_guidance.sts_guide == 1){ // Routing
-                map.qmlSignalPosInfo(car_position_lat, car_position_lon,car_direction,car_accumulated_distance);
-                map.qmlSignalRouteInfo(car_position_lat, car_position_lon,routeQuery.waypoints[1].latitude,routeQuery.waypoints[1].longitude);
+                navigation.broadcastPosition(car_position_lat, car_position_lon,car_direction,car_accumulated_distance);
+                navigation.broadcastRouteInfo(car_position_lat, car_position_lon,routeQuery.waypoints[1].latitude,routeQuery.waypoints[1].longitude);
             }else if(btn_guidance.sts_guide == 2){ // onGuide
-                map.qmlSignalRouteInfo(car_position_lat, car_position_lon,routeQuery.waypoints[1].latitude,routeQuery.waypoints[1].longitude);
+                navigation.broadcastRouteInfo(car_position_lat, car_position_lon,routeQuery.waypoints[1].latitude,routeQuery.waypoints[1].longitude);
             }
         }
 

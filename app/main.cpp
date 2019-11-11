@@ -27,6 +27,7 @@
 #include <QtQml/QQmlContext>
 #include <QtQuickControls2/QQuickStyle>
 #include <QQuickWindow>
+#include <navigation.h>
 #include "markermodel.h"
 #include "guidance_module.h"
 #include "file_operation.h"
@@ -47,10 +48,29 @@ int main(int argc, char *argv[])
 	parser.addHelpOption();
 	parser.addVersionOption();
 	parser.process(app);
+
+	// Load qml
+	QQmlApplicationEngine engine;
+	QQmlContext *context = engine.rootContext();
+
+	File_Operation file;
+	context->setContextProperty("fileOperation", &file);
+
 	QStringList positionalArguments = parser.positionalArguments();
 	if (positionalArguments.length() == 2) {
 		port = positionalArguments.takeFirst().toInt();
 		token = positionalArguments.takeFirst();
+		QUrl bindingAddress;
+		bindingAddress.setScheme(QStringLiteral("ws"));
+		bindingAddress.setHost(QStringLiteral("localhost"));
+		bindingAddress.setPort(port);
+		bindingAddress.setPath(QStringLiteral("/api"));
+		QUrlQuery query;
+		query.addQueryItem(QStringLiteral("token"), token);
+		bindingAddress.setQuery(query);
+
+		Navigation *navigation = new Navigation(bindingAddress, context);
+		context->setContextProperty("navigation", navigation);
 	}
 	fprintf(stderr, "[navigation] app_name: %s, port: %d, token: %s.\n",
 		graphic_role.toStdString().c_str(),
@@ -81,17 +101,12 @@ int main(int argc, char *argv[])
 					      qDebug("Surface %s got showWindow\n", graphic_role.toStdString().c_str());
 					      qwmHandler->activateWindow(graphic_role);
 				      });
-	// Load qml
-	QQmlApplicationEngine engine;
 
 	MarkerModel model;
-	engine.rootContext()->setContextProperty("markerModel", &model);
+	context->setContextProperty("markerModel", &model);
 
 	Guidance_Module guidance;
-	engine.rootContext()->setContextProperty("guidanceModule", &guidance);
-
-	File_Operation file;
-	engine.rootContext()->setContextProperty("fileOperation", &file);
+	context->setContextProperty("guidanceModule", &guidance);
 
 	engine.load(QUrl(QStringLiteral("qrc:/navigation.qml")));
  	QObject *root = engine.rootObjects().first();
