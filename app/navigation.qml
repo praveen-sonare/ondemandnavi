@@ -30,7 +30,7 @@ ApplicationWindow {
 	title: qsTr("navigation")
 
     property real car_position_lat: fileOperation.getStartLatitude()
-    property real car_position_lon: fileOperation.getStartLongitute()
+    property real car_position_lon: fileOperation.getStartLongitude()
     property real car_direction: 0  //North
     property real car_driving_speed: fileOperation.getCarSpeed()  // set Km/h
     property bool st_heading_up: false
