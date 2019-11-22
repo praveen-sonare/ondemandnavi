@@ -483,6 +483,9 @@ ApplicationWindow {
         }
 		function updatePositon()
 		{
+            if (!routeModel.get(0))
+                return;
+
             if(pathcounter <= routeModel.get(0).path.length - 1){
                 // calculate distance
                 var next_distance = calculateDistance(map.currentpostion.latitude,
@@ -646,16 +649,14 @@ ApplicationWindow {
 
         function doSetWaypointsSlot(latitude,longitue,startFromCurrentPosition){
 
-            if(btn_guidance.state !== "idle")
-                btn_guidance.discardWaypoints(startFromCurrentPosition);
+            btn_guidance.discardWaypoints(startFromCurrentPosition);
 
             if(btn_present_position.state === "Optional"){
                 map.center = map.currentpostion
                 btn_present_position.state = "Flowing"
             }
 
-            if((btn_guidance.state !== "onGuide") && (btn_guidance.state !== "Routing"))
-                map.addDestination(QtPositioning.coordinate(latitude,longitue))
+            map.addDestination(QtPositioning.coordinate(latitude,longitue))
         }
 
         states: [
