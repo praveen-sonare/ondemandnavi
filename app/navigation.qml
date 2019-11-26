@@ -51,6 +51,10 @@ ApplicationWindow {
                 name: "mapbox.mapping.additional_style_urls"
                 value: fileOperation.getMapStyleUrls()
             }
+            PluginParameter {
+                name: "mapbox.mapping.cache.directory"
+                value: fileOperation.getCachePath("mapbox")
+            }
     }
     Plugin {
             id: osm
@@ -58,6 +62,10 @@ ApplicationWindow {
             PluginParameter {
                 name: "osm.mapping.host";
                 value: "https://a.tile.openstreetmap.org/"
+            }
+            PluginParameter {
+                name: "osm.mapping.cache.directory"
+                value: fileOperation.getCachePath("osm")
             }
     }
 
