@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE double getStartLongitude();
     Q_INVOKABLE QString getMapStyleUrls();
     Q_INVOKABLE bool isOSMEnabled() { return m_enable_osm; };
+    Q_INVOKABLE QString getCachePath(QString name);
 
 private:
     void initFileOperation();
