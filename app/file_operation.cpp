@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "file_operation.h"
 
 File_Operation::File_Operation(){
@@ -100,4 +101,15 @@ double File_Operation::getStartLongitude(){
 }
 QString File_Operation::getMapStyleUrls() {
     return m_mapStyleUrls;
+}
+
+QString File_Operation::getCachePath(QString name)
+{
+    QString path("/var/run/user/");
+
+    path.append(QString::number(getuid()));
+    path.append("/usrshr/cache/");
+    path.append(name);
+
+    return path;
 }
