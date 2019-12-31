@@ -12,6 +12,8 @@ Item {
 
         function present_position_clicked() {
             map.center = map.currentpostion
+            map.zoomLevel = default_zoom_level
+            map.bearing = 0
             btn_present_position.state = "Flowing"
         }
         onClicked: { present_position_clicked() }
