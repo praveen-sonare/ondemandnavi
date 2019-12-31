@@ -79,6 +79,10 @@ ApplicationWindow {
 
         onStatusEvent: {
             if (data.state == "stop") {
+                // Slight hack here, if sts_guide != 0, btn_guidance.discardWaypoints
+                // will trigger another stop, which can cancel a queued waypoint set,
+                // so set it to 0 in advance.
+                btn_guidance.sts_guide = 0
                 map.doPauseSimulationSlot()
             }
             if (data.state == "start") {
