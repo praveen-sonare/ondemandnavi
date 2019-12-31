@@ -32,7 +32,7 @@ Item {
 		State {
             name: "2" // DirectionBearRight
             PropertyChanges { target: img_destination_direction; visible: true }
-            PropertyChanges { target: direction; source: "images/11_2_bear_right_112px-Signal_C117a.svg.png" }
+            PropertyChanges { target: direction; source: "images/11_2_bear_right_112px-Signal_C117a.png" }
 		},
 		State {
             name: "3" // DirectionLightRight
@@ -52,13 +52,13 @@ Item {
 		State {
             name: "6" // DirectionUTurnRight
             PropertyChanges { target: img_destination_direction; visible: true }
-//            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_211.svg.png" }
-            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_212.svg.png" } // No u-turn right in CES2019
+//            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_211.png" }
+            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_212.png" } // No u-turn right in CES2019
         },
 		State {
             name: "7" // DirectionUTurnLeft
             PropertyChanges { target: img_destination_direction; visible: true }
-            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_212.svg.png" }
+            PropertyChanges { target: direction; source: "images/146px-Israely_road_sign_212.png" }
 		},
 		State {
             name: "8" // DirectionHardLeft
@@ -78,7 +78,7 @@ Item {
         State {
             name: "11" // DirectionBearLeft
             PropertyChanges { target: img_destination_direction; visible: true }
-            PropertyChanges { target: direction; source: "images/10_11_bear_left_112px-Signal_C117a.svg.png" }
+            PropertyChanges { target: direction; source: "images/10_11_bear_left_112px-Signal_C117a.png" }
         },
         State {
             name: "12" // arrived at your destination

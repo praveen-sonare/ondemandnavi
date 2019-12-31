@@ -28,17 +28,17 @@ Item {
 			height: 92
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/202px-Compass-icon_bb_N.svg.png"
+            source: "images/202px-Compass-icon_bb_N.png"
 		}
 
 		states: [
 			State {
 				name: "HeadingUp"
-                PropertyChanges { target: image; source: "images/240px-Compass_icon_NE.svg.png" }
+                PropertyChanges { target: image; source: "images/240px-Compass_icon_NE.png" }
 			},
 			State {
 				name: "NorthUp"
-                PropertyChanges { target: image; source: "images/202px-Compass-icon_bb_N.svg.png" }
+                PropertyChanges { target: image; source: "images/202px-Compass-icon_bb_N.png" }
             }
 		]
     }

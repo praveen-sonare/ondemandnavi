@@ -22,7 +22,7 @@ Item {
             height: 92
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/207px-Car_icon_top.svg.png"
+            source: "images/207px-Car_icon_top.png"
         }
     }
     states: [

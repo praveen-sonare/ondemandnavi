@@ -72,7 +72,7 @@ Item {
             height: 92
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/200px-Black_close_x.svg.png"
+            source: "images/200px-Black_close_x.png"
         }
     }
 

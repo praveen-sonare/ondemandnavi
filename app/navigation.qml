@@ -311,7 +311,7 @@ ApplicationWindow {
                     id: icon_destination_point_image
                     width: 32
                     height: 32
-                    source: "images/200px-Black_close_x.svg.png"
+                    source: "images/200px-Black_close_x.png"
                 }
             }
         }

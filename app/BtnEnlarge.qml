@@ -18,7 +18,7 @@ Item {
 			height: 92
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/240px-Antu_kdenlive-zoom-large.svg.png"
+            source: "images/240px-Antu_kdenlive-zoom-large.png"
 		}
 	}
 }

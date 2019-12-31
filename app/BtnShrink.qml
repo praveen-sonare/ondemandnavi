@@ -19,7 +19,7 @@ Item {
 			height: 92
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/240px-Antu_file-zoom-out.svg.png"
+            source: "images/240px-Antu_file-zoom-out.png"
 		}
 	}
 }
