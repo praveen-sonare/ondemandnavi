@@ -31,6 +31,8 @@ Item {
         btn_present_position.state = "Flowing"
         btn_guidance.sts_guide = 2
         btn_guidance.state = "onGuide"
+        map.zoomLevel = default_zoom_level
+        map.bearing = 0
     }
 
     function discardWaypoints(startFromCurrentPosition) {

@@ -7,8 +7,11 @@ Item {
 		height: 100
 
         function zoomUp() {
-            map.zoomLevel += 1
+		map.zoomLevel += 1
+		if(map.zoomLevel != default_zoom_level) {
+			btn_present_position.state = "Optional"
 		}
+	}
 
         onClicked: { zoomUp() }
 
