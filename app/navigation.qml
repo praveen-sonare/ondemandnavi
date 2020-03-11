@@ -48,7 +48,7 @@ ApplicationWindow {
                 value: fileOperation.getMapAccessToken()
             }
             PluginParameter {
-                name: "mapbox.mapping.additional_style_urls"
+                name: "mapbox.mapping.additional_map_ids"
                 value: fileOperation.getMapStyleUrls()
             }
             PluginParameter {
