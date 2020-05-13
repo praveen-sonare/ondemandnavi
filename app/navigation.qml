@@ -21,12 +21,13 @@ import QtQuick.Controls 2.0
 import QtWebSockets 1.0
 import QtLocation 5.9
 import QtPositioning 5.6
+import QtQuick.Window 2.11
 
 ApplicationWindow {
     id: root
     visible: true
-    width: 1080
-    height: 1488
+    width: Window.width
+    height: Window.height
     title: qsTr("navigation")
 
     property real car_position_lat: fileOperation.getStartLatitude()
