@@ -27,7 +27,12 @@ copy_flite.commands = $(COPY_FILE) \"$$replace(copy_flite.depends, /, $$QMAKE_DI
 QMAKE_EXTRA_TARGETS += copy_flite
 PRE_TARGETDEPS += $$copy_flite.target
 
+WGT_TYPE =
+CONFIG(debug, debug|release) {
+    WGT_TYPE = -debug
+}
+
 wgt.target = package
-wgt.commands = wgtpkg-pack -f -o navigation.wgt root
+wgt.commands = wgtpkg-pack -f -o navigation$${WGT_TYPE}.wgt root
 
 QMAKE_EXTRA_TARGETS += wgt
