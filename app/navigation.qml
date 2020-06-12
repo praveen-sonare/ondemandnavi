@@ -23,11 +23,11 @@ import QtLocation 5.9
 import QtPositioning 5.6
 
 ApplicationWindow {
-	id: root
-	visible: true
-	width: 1080
+    id: root
+    visible: true
+    width: 1080
     height: 1488
-	title: qsTr("navigation")
+    title: qsTr("navigation")
 
     property real car_position_lat: fileOperation.getStartLatitude()
     property real car_position_lon: fileOperation.getStartLongitude()
@@ -92,15 +92,15 @@ ApplicationWindow {
     }
 
     Map {
-		id: map
+        id: map
         property int pathcounter : 0
         property int segmentcounter : 0
         property int waypoint_count: -1
-		property int lastX : -1
-		property int lastY : -1
-		property int pressX : -1
-		property int pressY : -1
-		property int jitterThreshold : 30
+        property int lastX : -1
+        property int lastY : -1
+        property int pressX : -1
+        property int pressY : -1
+        property int jitterThreshold : 30
         property variant currentpostion : QtPositioning.coordinate(car_position_lat, car_position_lon)
         property int last_segmentcounter : -1
 
@@ -112,47 +112,47 @@ ApplicationWindow {
         bearing: 0
         objectName: "map"
 
-		GeocodeModel {
-			id: geocodeModel
-			plugin: map.plugin
-			onStatusChanged: {
-				if ((status == GeocodeModel.Ready) || (status == GeocodeModel.Error))
-					map.geocodeFinished()
-			}
-			onLocationsChanged:
-			{
-				if (count == 1) {
-					map.center.latitude = get(0).coordinate.latitude
-					map.center.longitude = get(0).coordinate.longitude
-				}
-			}
+        GeocodeModel {
+            id: geocodeModel
+            plugin: map.plugin
+            onStatusChanged: {
+                if ((status == GeocodeModel.Ready) || (status == GeocodeModel.Error))
+                    map.geocodeFinished()
+            }
+            onLocationsChanged: {
+                if (count == 1) {
+                    map.center.latitude = get(0).coordinate.latitude
+                    map.center.longitude = get(0).coordinate.longitude
+                }
+            }
         }
-		MapItemView {
-			model: geocodeModel
-			delegate: pointDelegate
-		}
-		Component {
-			id: pointDelegate
 
-			MapCircle {
-				id: point
-				radius: 1000
-				color: "#46a2da"
-				border.color: "#190a33"
-				border.width: 2
-				smooth: true
-				opacity: 0.25
-				center: locationData.coordinate
-			}
-		}
+        MapItemView {
+            model: geocodeModel
+            delegate: pointDelegate
+        }
 
-		function geocode(fromAddress)
-		{
-			// send the geocode request
-			geocodeModel.query = fromAddress
-			geocodeModel.update()
-		}
-		
+        Component {
+            id: pointDelegate
+            MapCircle {
+                id: point
+                radius: 1000
+                color: "#46a2da"
+                border.color: "#190a33"
+                border.width: 2
+                smooth: true
+                opacity: 0.25
+                center: locationData.coordinate
+            }
+        }
+
+        function geocode(fromAddress)
+        {
+            // send the geocode request
+            geocodeModel.query = fromAddress
+            geocodeModel.update()
+        }
+
         MapQuickItem {
             id: poi
             sourceItem: Rectangle { width: 14; height: 14; color: "#e41e25"; border.width: 2; border.color: "white"; smooth: true; radius: 7 }
@@ -163,6 +163,7 @@ ApplicationWindow {
             opacity: 1.0
             anchorPoint: Qt.point(sourceItem.width/2, sourceItem.height/2)
         }
+
         MapQuickItem {
             sourceItem: Text{
                 text: "Westgate"
@@ -175,6 +176,7 @@ ApplicationWindow {
             z:11
             anchorPoint: Qt.point(-poi.sourceItem.width * 0.5, poi.sourceItem.height * 1.5)
         }
+
         MapQuickItem {
             id: car_position_mapitem
             property int isRotating: 0
@@ -183,7 +185,6 @@ ApplicationWindow {
                 width: 48
                 height: 48
                 source: "images/position02.svg"
-
                 transform: Rotation {
                     id: car_position_mapitem_image_rotate
                     origin.x: car_position_mapitem_image.width/2
@@ -253,55 +254,51 @@ ApplicationWindow {
             }
         }
 
-		RouteModel {
-			id: routeModel
+        RouteModel {
+            id: routeModel
             objectName: "routeModel"
             plugin: map.plugin
-			query:  RouteQuery {
-				id: routeQuery
-			}
-			onStatusChanged: {
-				if (status == RouteModel.Ready) {
-					switch (count) {
-					case 0:
-						// technically not an error
-					//	map.routeError()
-						break
-					case 1:
-						map.pathcounter = 0
-						map.segmentcounter = 0
-                        break
-					}
-				} else if (status == RouteModel.Error) {
-				//	map.routeError()
-				}
-			}
-		}
-		
-		Component {
-			id: routeDelegate
-
-			MapRoute {
-				id: route
-				route: routeData
-				line.color: "#4658da"
-				line.width: 10
+            query:  RouteQuery {
+                id: routeQuery
+            }
+            onStatusChanged: {
+                if (status == RouteModel.Ready) {
+                    switch (count) {
+                        case 0:
+                            // technically not an error
+                            //map.routeError()
+                            break
+                        case 1:
+                            map.pathcounter = 0
+                            map.segmentcounter = 0
+                            break
+                    }
+                } else if (status == RouteModel.Error) {
+                    //map.routeError()
+                }
+            }
+        }
+        Component {
+            id: routeDelegate
+            MapRoute {
+                id: route
+                route: routeData
+                line.color: "#4658da"
+                line.width: 10
                 z:5
-				smooth: true
+                smooth: true
                 opacity: 0.8
-			}
-		}
-		
-		MapItemView {
-			model: routeModel
-			delegate: routeDelegate
-		}
+            }
+        }
+        MapItemView {
+            model: routeModel
+            delegate: routeDelegate
+        }
 
         MapItemView{
             model: markerModel
             delegate: mapcomponent
         }
-
         Component {
             id: mapcomponent
             MapQuickItem {
@@ -310,7 +307,6 @@ ApplicationWindow {
                 anchorPoint.y: icon_destination_point_image.height
                 z:20
                 coordinate: position
-
                 sourceItem: Image {
                     id: icon_destination_point_image
                     width: 32
@@ -355,13 +351,10 @@ ApplicationWindow {
         function initDestination(startFromCurrentPosition){
             if (startFromCurrentPosition === undefined) startFromCurrentPosition = false
             routeModel.reset();
-            console.log("initWaypoint")
-
             // reset currentpostion
             map.currentpostion = QtPositioning.coordinate(car_position_lat, car_position_lon)
             car_accumulated_distance = 0
             navigation.broadcastPosition(car_position_lat, car_position_lon,car_direction,car_accumulated_distance)
-
             routeQuery.clearWaypoints();
             routeQuery.addWaypoint(map.currentpostion)
             routeQuery.travelModes = RouteQuery.CarTravel
@@ -369,12 +362,13 @@ ApplicationWindow {
             for (var i=0; i<9; i++) {
                 routeQuery.setFeatureWeight(i, 0)
             }
+
+            console.log("initWaypoint")
             waypoint_count = 0
             pathcounter = 0
             segmentcounter = 0
             routeModel.update();
             markerModel.removeMarker();
-            map.removeMapItem(markerModel);
 
             // remove MapItem
             map.removeMapItem(icon_start_point)
@@ -386,21 +380,20 @@ ApplicationWindow {
 
         }
 
-		function calculateMarkerRoute()
-		{
+        function calculateMarkerRoute(){
             var startCoordinate = QtPositioning.coordinate(car_position_lat, car_position_lon)
 
-			console.log("calculateMarkerRoute")
-			routeQuery.clearWaypoints();
+            console.log("calculateMarkerRoute")
+            routeQuery.clearWaypoints();
             routeQuery.addWaypoint(startCoordinate)
             routeQuery.addWaypoint(mouseArea.lastCoordinate)
-			routeQuery.travelModes = RouteQuery.CarTravel
-			routeQuery.routeOptimizations = RouteQuery.FastestRoute
-			for (var i=0; i<9; i++) {
-				routeQuery.setFeatureWeight(i, 0)
-			}
-			routeModel.update();
-		}
+            routeQuery.travelModes = RouteQuery.CarTravel
+            routeQuery.routeOptimizations = RouteQuery.FastestRoute
+            for (var i=0; i<9; i++) {
+                routeQuery.setFeatureWeight(i, 0)
+            }
+            routeModel.update();
+        }
 
         // Calculate direction from latitude and longitude between two points
         function calculateDirection(lat1, lon1, lat2, lon2) {
@@ -408,7 +401,6 @@ ApplicationWindow {
             var curlon = lon1 * Math.PI / 180;
             var taglat = lat2 * Math.PI / 180;
             var taglon = lon2 * Math.PI / 180;
-
             var Y  = Math.sin(taglon - curlon);
             var X  = Math.cos(curlat) * Math.tan(taglat) - Math.sin(curlat) * Math.cos(Y);
             var direction = 180 * Math.atan2(Y,X) / Math.PI;
@@ -425,9 +417,7 @@ ApplicationWindow {
             var radLon1 = lon1 * Math.PI / 180;
             var radLat2 = lat2 * Math.PI / 180;
             var radLon2 = lon2 * Math.PI / 180;
-
             var r = 6378137.0;
-
             var averageLat = (radLat1 - radLat2) / 2;
             var averageLon = (radLon1 - radLon2) / 2;
             var result = r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(averageLat), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(averageLon), 2)));
@@ -447,28 +437,28 @@ ApplicationWindow {
             map.currentpostion = QtPositioning.coordinate(curlat+addlat, curlon+addlon);
         }
 
-		MouseArea {
-			id: mouseArea
-			property variant lastCoordinate
-			anchors.fill: parent
-			acceptedButtons: Qt.LeftButton | Qt.RightButton
-			
-			onPressed : {
-				map.lastX = mouse.x
-				map.lastY = mouse.y
-				map.pressX = mouse.x
-				map.pressY = mouse.y
-				lastCoordinate = map.toCoordinate(Qt.point(mouse.x, mouse.y))
-			}
-			
-			onPositionChanged: {
+        MouseArea {
+            id: mouseArea
+            property variant lastCoordinate
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+            onPressed : {
+                map.lastX = mouse.x
+                map.lastY = mouse.y
+                map.pressX = mouse.x
+                map.pressY = mouse.y
+                lastCoordinate = map.toCoordinate(Qt.point(mouse.x, mouse.y))
+            }
+
+            onPositionChanged: {
                 if (mouse.button === Qt.LeftButton) {
-					map.lastX = mouse.x
-					map.lastY = mouse.y
-				}
-			}
-			
-			onPressAndHold:{
+                    map.lastX = mouse.x
+                    map.lastY = mouse.y
+                }
+            }
+
+            onPressAndHold:{
                 if((btn_guidance.state !== "onGuide") && (btn_guidance.state !== "Routing"))
                 {
                     if (Math.abs(map.pressX - mouse.x ) < map.jitterThreshold
@@ -477,16 +467,17 @@ ApplicationWindow {
                     }
                 }
 
-			}
-		}
+            }
+        }
+
         gesture.onFlickStarted: {
             btn_present_position.state = "Optional"
         }
         gesture.onPanStarted: {
             btn_present_position.state = "Optional"
         }
-		function updatePositon()
-		{
+
+        function updatePositon() {
             if (!routeModel.get(0))
                 return;
 
@@ -616,7 +607,7 @@ ApplicationWindow {
                     }
                 }
             }
-		}
+        }
 
         function doGetRouteInfoSlot(){
             if(btn_guidance.sts_guide == 0){ // idle
@@ -688,7 +679,7 @@ ApplicationWindow {
             }
         }
     }
-		
+
     BtnPresentPosition {
         id: btn_present_position
         anchors.right: parent.right
