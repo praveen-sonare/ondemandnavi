@@ -38,6 +38,6 @@ example
 	"interval":100,
 	"latitude":36.1363,
 	"longitude":-115.151,
-	"mapStyleUrls":"mapbox://styles/mapbox/dark-v9",
+	"mapStyleUrls":"styles/v1/mapbox/dark-v10",
 	"enableOSM:false
 }

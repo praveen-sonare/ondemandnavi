@@ -17,7 +17,7 @@ void File_Operation::initFileOperation(){
     m_start_latitude = 36.136261; // set default coordinate Westgate
     m_start_longitude = -115.151254;
     m_enable_osm = false;
-    m_mapStyleUrls = "mapbox://styles/v1/mapbox/streets-v11"; // set default map style
+    m_mapStyleUrls = "styles/v1/mapbox/streets-v11"; // set default map style
 
     QFile file(NAVI_CONFIG_FILEPATH);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
