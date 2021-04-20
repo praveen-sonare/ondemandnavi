@@ -1,4 +1,4 @@
 #!/bin/sh
 TMP=/tmp/navi.wav
 echo "$1" | flite_hts_engine -m  /usr/share/Voice/us/cmu_us_arctic_slt.htsvoice -o $TMP
-gst-launch-1.0 filesrc location=$TMP ! decodebin ! audioconvert ! audioresample ! pwaudiosink stream-properties="p,media.role=Navigation"
+gst-launch-1.0 filesrc location=$TMP ! decodebin ! audioconvert ! audioresample ! pipewiresink stream-properties="p,media.role=Navigation"
