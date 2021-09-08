@@ -1,0 +1,32 @@
+app-id: org.automotivelinux.apps.Navigation
+runtime: iot.poky_agl.BaseSdk
+runtime-version: "current"
+sdk: iot.poky_agl.BaseSdk
+command: navigation
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --device=dri
+
+modules:
+  - name: agl-service-navigation
+    buildsystem: cmake
+    builddir: true
+    config-opts:
+      - -DCMAKE_MODULE_PATH=/app/share/cmake-3.16/Modules
+    sources:
+      - type: git
+        url: https://git.automotivelinux.org/apps/agl-service-navigation/
+        branch: master
+
+  - name: ondemandnavi
+    buildsystem: cmake
+    config-opts:
+      # FIXME: We should remove the need for this Yocto-specific config.
+      - -DOE_QMAKE_PATH_EXTERNAL_HOST_BINS=/usr/bin
+    post-install:
+      - install -D -m644 ./package/naviconfig.ini /app/etc/naviconfig.ini
+    sources:
+      - type: dir
+        path: .

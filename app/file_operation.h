@@ -9,9 +9,9 @@
 /******************************************************
  * Please set mapAccessToken, mapStyleUrl, speed,
  * interval, latitude and longitude in JSON format
- * in /etc/naviconfig.ini
+ * in /app/etc/naviconfig.ini
  ******************************************************/
-#define NAVI_CONFIG_FILEPATH "/etc/naviconfig.ini"
+#define NAVI_CONFIG_FILEPATH "/app/etc/naviconfig.ini"
 
 class File_Operation: public QObject{
 
