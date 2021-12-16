@@ -17,7 +17,6 @@
 
 #include <string>
 #include <QtCore/QDebug>
-#include <QtCore/QCommandLineParser>
 #include <QtCore/QUrlQuery>
 #include <QtCore/QSettings>
 #include <QtGui/QGuiApplication>
@@ -34,9 +33,6 @@ int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 	QString graphic_role = QString("navigation");
-	int port = 1700;
-
-	QString token = "hello";
 
 	QCoreApplication::setOrganizationDomain("LinuxFoundation");
 	QCoreApplication::setOrganizationName("AutomotiveGradeLinux");
@@ -45,13 +41,6 @@ int main(int argc, char *argv[])
 
 	app.setDesktopFileName(graphic_role);
 
-	QCommandLineParser parser;
-	parser.addPositionalArgument("port", app.translate("main", "port for binding"));
-	parser.addPositionalArgument("secret", app.translate("main", "secret for binding"));
-	parser.addHelpOption();
-	parser.addVersionOption();
-	parser.process(app);
-
 	// Load qml
 	QQmlApplicationEngine engine;
 	QQmlContext *context = engine.rootContext();
@@ -59,26 +48,9 @@ int main(int argc, char *argv[])
 	File_Operation file;
 	context->setContextProperty("fileOperation", &file);
 
-	QStringList positionalArguments = parser.positionalArguments();
-	if (positionalArguments.length() == 2) {
-		port = positionalArguments.takeFirst().toInt();
-		token = positionalArguments.takeFirst();
-		QUrl bindingAddress;
-		bindingAddress.setScheme(QStringLiteral("ws"));
-		bindingAddress.setHost(QStringLiteral("localhost"));
-		bindingAddress.setPort(port);
-		bindingAddress.setPath(QStringLiteral("/api"));
-		QUrlQuery query;
-		query.addQueryItem(QStringLiteral("token"), token);
-		bindingAddress.setQuery(query);
+	Navigation *navigation = new Navigation(context);
+	context->setContextProperty("navigation", navigation);
 
-		Navigation *navigation = new Navigation(bindingAddress, context);
-		context->setContextProperty("navigation", navigation);
-	}
-	fprintf(stderr, "[navigation] app_name: %s, port: %d, token: %s.\n",
-		graphic_role.toStdString().c_str(),
-		port,
-		token.toStdString().c_str());
 	MarkerModel model;
 	context->setContextProperty("markerModel", &model);
 
