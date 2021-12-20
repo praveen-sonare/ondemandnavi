@@ -18,7 +18,7 @@ RESOURCES += \
     navigation.qrc \
     images/images.qrc
 
-target.path = $${PREFIX}/usr/bin
+target.path = /usr/bin
 target.files += $${OUT_PWD}/$${TARGET}
 target.CONFIG = no_check_exist executable
 
