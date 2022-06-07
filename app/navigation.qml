@@ -566,7 +566,7 @@ ApplicationWindow {
                     {
                         // Arrive at your destination
                         btn_guidance.sts_guide = 0
-                        navigation.broadcastStatus("arrived")
+                        navigation.broadcastStatus("Arrived")
                     }
                 }else{
                     setNextCoordinate(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,root.car_moving_distance)

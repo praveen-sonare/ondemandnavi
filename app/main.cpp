@@ -25,6 +25,7 @@
 #include <QtQuickControls2/QQuickStyle>
 #include <QQuickWindow>
 #include <navigation.h>
+#include <vehiclesignals.h>
 #include "markermodel.h"
 #include "guidance_module.h"
 #include "file_operation.h"
@@ -48,7 +49,8 @@ int main(int argc, char *argv[])
 	File_Operation file;
 	context->setContextProperty("fileOperation", &file);
 
-	Navigation *navigation = new Navigation(context);
+	VehicleSignalsConfig vsConfig("navigation");
+	Navigation *navigation = new Navigation(new VehicleSignals(vsConfig), context);
 	context->setContextProperty("navigation", navigation);
 
 	MarkerModel model;
