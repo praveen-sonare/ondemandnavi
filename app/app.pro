@@ -3,7 +3,7 @@ TARGET = navigation
 QT = core qml quick positioning
 CONFIG += c++11 link_pkgconfig
 
-PKGCONFIG += qtappfw-navigation
+PKGCONFIG += qtappfw-navigation qtappfw-vehicle-signals
 
 HEADERS += \
     markermodel.h \

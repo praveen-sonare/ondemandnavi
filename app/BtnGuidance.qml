@@ -40,7 +40,7 @@ Item {
         map.initDestination(startFromCurrentPosition)
 
         if(btn_guidance.sts_guide != 0){
-            navigation.broadcastStatus("stop");
+            navigation.broadcastStatus("Stopped");
         }
 
         if(map.center !== map.currentpostion){
