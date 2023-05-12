@@ -78,18 +78,23 @@ ApplicationWindow {
             map.doSetWaypointsSlot(data.points[0].latitude, data.points[0].longitude, true)
         }
 
-        onStatusEvent: {
-            if (data.state == "stop") {
-                // Slight hack here, if sts_guide != 0, btn_guidance.discardWaypoints
-                // will trigger another stop, which can cancel a queued waypoint set,
-                // so set it to 0 in advance.
-                btn_guidance.sts_guide = 0
-                map.doPauseSimulationSlot()
-            }
-            if (data.state == "start") {
-                btn_guidance.startGuidance()
-            }
-        }
+        // The status event no longer has start/stop, since that did not really
+        // match with "sensor" signal behavior in VSS.  If such is required in
+        // the future, a new "actuator" signal should be used in the backend
+        // instead to reimplement this as a different event.
+        //
+        //onStatusEvent: {
+        //    if (data.state == "stop") {
+        //        // Slight hack here, if sts_guide != 0, btn_guidance.discardWaypoints
+        //        // will trigger another stop, which can cancel a queued waypoint set,
+        //        // so set it to 0 in advance.
+        //        btn_guidance.sts_guide = 0
+        //        map.doPauseSimulationSlot()
+        //    }
+        //    if (data.state == "start") {
+        //        btn_guidance.startGuidance()
+        //    }
+        //}
     }
 
     Map {
@@ -566,7 +571,7 @@ ApplicationWindow {
                     {
                         // Arrive at your destination
                         btn_guidance.sts_guide = 0
-                        navigation.broadcastStatus("Arrived")
+                        navigation.broadcastStatus("ARRIVED")
                     }
                 }else{
                     setNextCoordinate(map.currentpostion.latitude, map.currentpostion.longitude,next_direction,root.car_moving_distance)
